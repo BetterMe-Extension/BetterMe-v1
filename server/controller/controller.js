@@ -29,6 +29,8 @@ appControllers.login = async (req, res, next) => {
 
 appControllers.signup = async (req, res, next) => {
   const { fullname, username, password, email } = req.body;
+  // console.log("here is the username: ", username);
+  // console.log("type of username: ", typeof username);
 
   //create an empty object
   const validationErrors = {};
@@ -43,6 +45,8 @@ appControllers.signup = async (req, res, next) => {
   }
 
   // if fullname is empty
+  console.log('this is the request body');
+  console.log(req.body);
 
   if (fullname.length === 0) {
     validationErrors.fullname = 'Please enter your full name.';
@@ -70,7 +74,6 @@ appControllers.signup = async (req, res, next) => {
   }
 
   const q = 'SELECT * FROM users WHERE username=($1) OR email=($2)';
-
   await db.query(q, [username, email], async (err, data) => {
     if (err) {
       return next(err);

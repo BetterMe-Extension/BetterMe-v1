@@ -31,6 +31,7 @@ function SignUpPage() {
         { withCredentials: true }
       )
       .then((res) => {
+        console.log(res);
         // navigate('/userdetails');
         // setLoading(false);
         window.location.replace('/userdetails');
