@@ -44,10 +44,6 @@ appControllers.signup = async (req, res, next) => {
     validationErrors.username = 'Username must be max 20 characters';
   }
 
-  // if fullname is empty
-  console.log('this is the request body');
-  console.log(req.body);
-
   if (fullname.length === 0) {
     validationErrors.fullname = 'Please enter your full name.';
   }
@@ -78,7 +74,6 @@ appControllers.signup = async (req, res, next) => {
     if (err) {
       return next(err);
     }
-    console.log(err);
     const result = await data;
     console.log('here is the response: ', result.rows.length);
     if (result.rows.length > 0) {
