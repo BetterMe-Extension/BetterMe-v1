@@ -15,6 +15,37 @@ function General() {
     const Allergies = useRef(null);
     const Hated = useRef(null);
     const Favourite = useRef(null);
+/*
+    const id = req.params.id;
+    const { age, height, weight, diet_type, allergies } = req.body;*/
+
+    async function handleUpdateProf (e) {
+        e.preventDefault();
+        console.log('event');
+        console.log(e);
+        console.log(e.target.form[0].value)
+        let shortForm = e.target.form;
+        let age = shortForm[0].value;
+        let height = shortForm[1].value;
+        let weight = shortForm[2].value;
+        let diet_type = shortForm[3].value;
+        let allergies = shortForm[4].value;
+
+        console.log(user.user_id);
+        await axios({
+            method: 'PUT',
+            url: `http://localhost:4000/userDetails/:${user.user_id}/update`,
+            data: {age: age,
+        height: height,
+        weight: weight,
+        diet_type: diet_type,
+        allergies: allergies}
+            })
+        .then((res) => {
+            //setUserDetails(res.data.data)
+        })
+        .catch((err) => console.log(err));
+    };
 
     useEffect(() => {
         if (user) {
@@ -92,7 +123,7 @@ function General() {
                     <input ref={Hated} type="text" placeholder="Enter your new Hated Food..." />
                     <br /><br />
 
-                    <button onClick={() => console.log('value')}>Submit Changes</button>
+                    <button onClick={handleUpdateProf}>Submit Changes</button>
                 </form>
             </div>
         </div>

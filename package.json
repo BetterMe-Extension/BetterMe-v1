@@ -18,5 +18,8 @@
   "homepage": "https://github.com/BetterMe-Extension/BetterMe-v1#readme",
   "devDependencies": {
     "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0"
   }
 }

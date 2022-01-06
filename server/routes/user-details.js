@@ -38,6 +38,7 @@ router.post("/:id/create", async (req, res) => {
 
 // Update the preferences for a given user.
 router.put("/:id/update", async function (req, res) {
+  console.log('entered update');
   const id = req.params.id;
   const { age, height, weight, diet_type, allergies } = req.body;
   const q =
@@ -47,7 +48,10 @@ router.put("/:id/update", async function (req, res) {
     [age, weight, height, diet_type, allergies, id],
     (err, result) => {
       if (err) {
+        console.log('failed to update user details');
         return res.status(400).send("Error updating user details");
+      } else {
+        console.log('succeeded in updating user details');
       }
       return res.status(200).send("Successfully updated user details");
     }
