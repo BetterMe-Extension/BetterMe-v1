@@ -1,18 +1,34 @@
+<<<<<<< HEAD
 const db = require('../db-models/db-models');
 
+=======
+/* Import Statements */
+const db = require("../db-models/db-models");
+>>>>>>> 474b6e6c9b554f1bd53d6577e9a1de8cd46b2d32
 const appControllers = {};
 
-//CONTROLLERS HERE
+/* Controllers */
 
+// Use this controller to login to the app.
 appControllers.login = async (req, res, next) => {
   const { username, password } = req.body;
+<<<<<<< HEAD
   console.log('this is username from controllers:', username);
   const q = 'SELECT * FROM users WHERE username=($1) AND password=($2)';
+=======
+  console.log("this is username from controllers:", username);
+
+  // Submit query searching for a user.
+  const q = "SELECT * FROM users WHERE username=($1) AND password=($2)";
+>>>>>>> 474b6e6c9b554f1bd53d6577e9a1de8cd46b2d32
   await db.query(q, [username, password], (err, data) => {
     if (err) {
       return next(err);
     }
+
+    // If more than row comes back in the query, we know that the user exists.
     if (data.rows.length > 0) {
+<<<<<<< HEAD
       console.log('user exist');
       res.cookie('user', JSON.stringify(data.rows[0]), {
         maxAge: 900000,
@@ -22,11 +38,37 @@ appControllers.login = async (req, res, next) => {
       return next();
     } else {
       res.locals.error = 'wrong username or password';
+=======
+      console.log("user exist");
+      // If the user is returned, set a cookie 'user' that contains the stringified information associated with that user.
+      res.cookie("user", JSON.stringify(data.rows[0]), {
+        maxAge: 900000,
+        httpOnly: false,
+      });
+
+      // If logged in, set res.locals.message to 'successfully logged in.'
+      res.locals.message = "successfully logged in";
+      return next();
+    } else {
+
+      // Otherwise, advise user of wrong username and password.
+      res.locals.error = "wrong username or password";
+>>>>>>> 474b6e6c9b554f1bd53d6577e9a1de8cd46b2d32
       return next();
     }
   });
 };
 
+// Log out controller -- which is not implemented on the frontend -- clears login cookie.
+appControllers.logout = async (req, res, next) => {
+  console.log(req.body)
+  res.clearCookie("user");
+  next();
+}
+
+// Signup controller.
+// RESTRICTIONS:
+  // USERNAME [REQUIRED, MINIMUM 6 CHARACTERS, MAXIMUM 20 CHARACTERS]
 appControllers.signup = async (req, res, next) => {
   const { fullname, username, password, email } = req.body;
   // console.log("here is the username: ", username);
