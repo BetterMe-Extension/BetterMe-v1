@@ -5,13 +5,13 @@ const appControllers = {};
 /* Controllers */
 
 // Use this controller to login to the app.
-appControllers.login = async (req, res, next) => {
+appControllers.login =  (req, res, next) => {
   const { username, password } = req.body;
   console.log("this is username from controllers:", username);
 
   // Submit query searching for a user.
   const q = "SELECT * FROM users WHERE username=($1) AND password=($2)";
-  await db.query(q, [username, password], (err, data) => {
+   db.query(q, [username, password], (err, data) => {
     if (err) {
       return next(err);
     }
@@ -49,8 +49,7 @@ appControllers.logout = async (req, res, next) => {
   // USERNAME [REQUIRED, MINIMUM 6 CHARACTERS, MAXIMUM 20 CHARACTERS]
 appControllers.signup = async (req, res, next) => {
   const { fullname, username, password, email } = req.body;
-  // console.log("here is the username: ", username);
-  // console.log("type of username: ", typeof username);
+  console.log("this is req body:", req.body)
 
   //create an empty object
   const validationErrors = {};
@@ -65,9 +64,6 @@ appControllers.signup = async (req, res, next) => {
   }
 
   // if fullname is empty
-  console.log('this is the request body');
-  console.log(req.body);
-
   if (fullname.length === 0) {
     validationErrors.fullname = "Please enter your full name.";
   }
@@ -87,20 +83,19 @@ appControllers.signup = async (req, res, next) => {
     }
   }
   // if email is not correctly formatted as email address
-
   if (Object.keys(validationErrors).length !== 0) {
     res.locals.validationErrors = validationErrors;
     return next();
   }
 
   const q = "SELECT * FROM users WHERE username=($1) OR email=($2)";
-  await db.query(q, [username, email], async (err, data) => {
+    await db.query(q, [username, email], async (err, data) => {
     if (err) {
       return next(err);
     }
-    console.log(err);
+    //console.log(err);
     const result = await data;
-    console.log("here is the response: ", result.rows.length);
+
     if (result.rows.length > 0) {
       res.locals.error =
         "Account with this username/email already exists. Please try with different username/email";
@@ -113,14 +108,12 @@ appControllers.signup = async (req, res, next) => {
           if (err) {
             return next(err);
           }
-          console.log("hey i inserted the user");
 
           await db.query(
             "SELECT * FROM users WHERE username=($1)",
             [username],
             (err, data) => {
-              // console.log(data.rows[0]);
-
+              console.log(data)
               res.cookie("user", JSON.stringify(data.rows[0]), {
                 maxAge: 90000,
                 httpOnly: false,
