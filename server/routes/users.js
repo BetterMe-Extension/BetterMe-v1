@@ -9,8 +9,6 @@ router.use(cookieParser());
 
 /* SignUp Route*/
 router.post("/signup", appControllers.signup, (req, res) => {
-  console.log("this is the message: ", res.locals.message);
-  console.log("this is error:", res.locals.error);
   // Check where validation errors are generated.
   if (res.locals.validationErrors) {
     return res.json(res.locals.validationErrors);
@@ -37,14 +35,6 @@ router.post("/login", appControllers.login, (req, res) => {
     res.status(200).json({ message: res.locals.message });
   }
 });
-/* Logout Route*/
-// router.get("/logout", appControllers.logout, (req, res) => {
-//   console.log(req.body)
-//   res.clearCookie("user");
-//   res.status(200).send({ loggedIn: false })
-// })
-
-
 
 /* Profile Update Route*/
 router.put("/:id/updateProfile", async (req, res) => {
