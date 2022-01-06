@@ -16,5 +16,10 @@
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "jest": "^27.4.7",
+    "supertest": "^6.1.6"
   }
 }

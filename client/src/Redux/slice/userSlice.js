@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Cookie from 'js-cookie';
+
+let biscuit;
+
+if (Cookie.get('user')) biscuit = JSON.parse(Cookie.get('user'));
 
 export const userSlice = createSlice({
 
-    name: 'user',
+    name: 'userSlice',
     initialState: {
-        user: null
+        user: biscuit || null
     },
     reducers: {
         login: (state, action) => {
@@ -20,4 +25,4 @@ export const userSlice = createSlice({
 
 export const { login, logout } = userSlice.actions;
 
-export  default userSlice.reducer
+export default userSlice.reducer
